@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fl4$m9=eosg6j*q-cg3jgm04kf=8dcg&d!g-rpjl-hw$q=+p#g'
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-fl4$m9=eosg6j*q-cg3jgm04kf=8dcg&d!g-rpjl-hw$q=+p#g")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #3rd party
+    "rest_framework",
     #Local
-    "books.apps.BooksConfig", #new
+    "books.apps.BooksConfig",
+    "apis.apps.ApisConfig" #new
 ]
 
 MIDDLEWARE = [
@@ -117,8 +122,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES' : [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
