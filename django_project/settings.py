@@ -26,7 +26,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-fl4$m9=eosg6j*q-cg3jg
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -81,13 +80,13 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': { dj_database_url.config(
+    'default':  dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
         ssl_require=True,
     )
         
-    }
+    
 }
 
 
